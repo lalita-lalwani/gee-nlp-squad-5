@@ -74,6 +74,21 @@ class Text(Resource):
         return result
 
     @api.expect(parser)
+    def delete(self):
+        """
+        This DELETE request will remove a particular Sentence.
+        """
+        # Create a Cloud Datastore client.
+        datastore_client = datastore.Client()
+
+        args = parser.parse_args()
+        text = args["text"]
+        # Get the datastore 'kind' which are 'Sentences'
+        query = datastore_client.delete()
+        return "Success" + text
+
+
+    @api.expect(parser)
     def post(self):
         """
         This POST request will accept a 'text', analyze the sentiment analysis of the first sentence, store
